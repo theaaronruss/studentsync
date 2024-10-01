@@ -1,2 +1,2 @@
-# studentsync
+# StudentSync
 A student management system
