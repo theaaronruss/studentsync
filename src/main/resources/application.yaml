@@ -5,3 +5,8 @@ spring:
     url: jdbc:mysql://localhost:3306/studentsync
     username: root
     password: root
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    url: /apispec.yaml
+  enable-default-api-docs: false

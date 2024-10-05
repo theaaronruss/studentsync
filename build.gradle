@@ -33,6 +33,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.swagger.core.v3:swagger-annotations:2.2.23'
 	implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -41,7 +42,7 @@ dependencies {
 
 openApiGenerate {
 	generatorName = "spring"
-	inputSpec = "$rootDir/src/main/resources/apispec.yaml"
+	inputSpec = "$rootDir/src/main/resources/static/apispec.yaml"
 	outputDir = "$buildDir/generated/openapi"
 	cleanupOutput = true
 	globalProperties.set([
