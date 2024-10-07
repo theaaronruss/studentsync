@@ -31,6 +31,7 @@ details
    ```
 7. Open a web browser and navigate to [http://localhost:8080/swagger-ui](http://localhost:8080/swagger-ui) to access the
 REST API endpoints
+8. Click on the `authorize` button on the right side of the page and enter your username and password to log in
 
 ## Creating a user
 
