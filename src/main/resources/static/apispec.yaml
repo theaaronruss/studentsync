@@ -109,6 +109,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+  /teachers:
+    post:
+      tags:
+        - Teachers
+      summary: Add a new teacher
+      description: Add a new teacher to the system
+      operationId: addTeacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTeacherRequestDTO'
+      responses:
+        '201':
+          description: Teacher created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherDTO'
 components:
   schemas:
     StudentDTO:
@@ -132,18 +152,27 @@ components:
           format: date
           description: The student's birth date
           example: 2001-03-17
-    ErrorDTO:
+    TeacherDTO:
       type: object
       properties:
-        message:
+        id:
           type: string
-          description: The error message
-          example: Student with ID of 461be284-e0e0-4873-8831-ca2500e31e39 not found
-        timestamp:
+          format: uuid
+          description: The teacher's ID
+          example: 245285c9-fa47-451d-8642-014985a32fad
+        firstName:
           type: string
-          format: date-time
-          description: The timestamp of the error
-          example: 2024-10-10T20:47:28.370269-04:00
+          description: The teacher's first name
+          example: Martha
+        lastName:
+          type: string
+          description: The teacher's last name
+          example: Smith
+        startDate:
+          type: string
+          format: date
+          description: The teacher's starting date of employment
+          example: 2022-06-21
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student
@@ -161,6 +190,34 @@ components:
           format: date
           description: The student's birth date
           example: 2001-03-17
+    AddTeacherRequestDTO:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The teacher's first name
+          example: Martha
+        lastName:
+          type: string
+          description: The teacher's last name
+          example: Smith
+        startDate:
+          type: string
+          format: date
+          description: The teacher's starting date of employment
+          example: 2022-06-21
+    ErrorDTO:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Student with ID of 461be284-e0e0-4873-8831-ca2500e31e39 not found
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of the error
+          example: 2024-10-10T20:47:28.370269-04:00
   securitySchemes:
     BasicAuth:
       type: http
