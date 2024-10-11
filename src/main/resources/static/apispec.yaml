@@ -5,21 +5,65 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /:
-    get:
-      summary: Placeholder endpoint
+  /students:
+    post:
+      summary: Add a new student
+      description: Add a new student to the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddStudentRequestDTO'
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Student created
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: Hello, world!
+                $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Invalid input
 components:
+  schemas:
+    StudentDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The student's ID
+          example: 375
+        firstName:
+          type: string
+          description: The student's first name
+          example: John
+        lastName:
+          type: string
+          description: The student's last name
+          example: Doe
+        birthDate:
+          type: string
+          format: date
+          description: The student's birth date
+          example: 2001-03-17
+    AddStudentRequestDTO:
+      type: object
+      description: A request to add a new student
+      properties:
+        firstName:
+          type: string
+          description: The student's first name
+          example: John
+        lastName:
+          type: string
+          description: The student's last name
+          example: Doe
+        birthDate:
+          type: string
+          format: date
+          description: The student's birth date
+          example: 2001-03-17
   securitySchemes:
     BasicAuth:
       type: http
