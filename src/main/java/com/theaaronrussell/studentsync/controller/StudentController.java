@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class StudentController implements StudentsApi {
 
@@ -20,9 +22,15 @@ public class StudentController implements StudentsApi {
     }
 
     @Override
-    public ResponseEntity<StudentDTO> studentsPost(AddStudentRequestDTO request) {
+    public ResponseEntity<StudentDTO> addStudent(AddStudentRequestDTO request) {
         StudentDTO response = studentService.addStudent(request);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteStudent(UUID id) {
+        studentService.deleteStudent(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

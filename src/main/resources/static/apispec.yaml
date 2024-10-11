@@ -7,8 +7,11 @@ servers:
 paths:
   /students:
     post:
+      tags:
+        - Students
       summary: Add a new student
       description: Add a new student to the system
+      operationId: addStudent
       requestBody:
         required: true
         content:
@@ -22,8 +25,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StudentDTO'
+  /students/{id}:
+    delete:
+      tags:
+        - Students
+      summary: Delete a student
+      description: Delete a student from the system
+      operationId: deleteStudent
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The student's ID
+      responses:
+        '204':
+          description: Student deleted
         '400':
           description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
@@ -33,7 +58,7 @@ components:
           type: string
           format: uuid
           description: The student's ID
-          example: 375
+          example: 461be284-e0e0-4873-8831-ca2500e31e39
         firstName:
           type: string
           description: The student's first name
@@ -47,6 +72,18 @@ components:
           format: date
           description: The student's birth date
           example: 2001-03-17
+    ErrorDTO:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message
+          example: Student with ID of 461be284-e0e0-4873-8831-ca2500e31e39 not found
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of the error
+          example: 2024-10-10T20:47:28.370269-04:00
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student
