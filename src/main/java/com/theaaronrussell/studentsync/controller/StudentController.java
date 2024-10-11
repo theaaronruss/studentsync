@@ -22,9 +22,21 @@ public class StudentController implements StudentsApi {
     }
 
     @Override
+    public ResponseEntity<StudentDTO> getStudent(UUID id) {
+        StudentDTO response = studentService.getStudent(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<StudentDTO> addStudent(AddStudentRequestDTO request) {
         StudentDTO response = studentService.addStudent(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<StudentDTO> updateStudent(UUID id, AddStudentRequestDTO request) {
+        StudentDTO response = studentService.updateStudent(id, request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Override

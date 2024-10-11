@@ -28,11 +28,33 @@ public class StudentService {
         this.studentMapper = studentMapper;
     }
 
+    public StudentDTO getStudent(UUID id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Student with ID {} not found", id);
+                    return new StudentNotFoundException(id);
+                });
+        return studentMapper.studentToStudentDto(student);
+    }
+
     @Transactional
     public StudentDTO addStudent(AddStudentRequestDTO request) {
-        Student studentEntity = studentMapper.addStudentRequestDtoToStudent(request);
-        Student savedStudent = studentRepository.save(studentEntity);
+        Student student = studentMapper.addStudentRequestDtoToStudent(request);
+        Student savedStudent = studentRepository.save(student);
         log.info("Student with ID {} added", savedStudent.getId());
+        return studentMapper.studentToStudentDto(savedStudent);
+    }
+
+    @Transactional
+    public StudentDTO updateStudent(UUID id, AddStudentRequestDTO request) {
+        if (!studentRepository.existsById(id)) {
+            log.error("Student with ID {} not found", id);
+            throw new StudentNotFoundException(id);
+        }
+        Student student = studentMapper.addStudentRequestDtoToStudent(request);
+        student.setId(id);
+        Student savedStudent = studentRepository.save(student);
+        log.info("Student with ID {} updated", savedStudent.getId());
         return studentMapper.studentToStudentDto(savedStudent);
     }
 
