@@ -28,6 +28,15 @@ public class StudentService {
         this.studentMapper = studentMapper;
     }
 
+    public StudentDTO getStudent(UUID id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Student with ID {} not found", id);
+                    return new StudentNotFoundException(id);
+                });
+        return studentMapper.studentToStudentDto(student);
+    }
+
     @Transactional
     public StudentDTO addStudent(AddStudentRequestDTO request) {
         Student student = studentMapper.addStudentRequestDtoToStudent(request);
