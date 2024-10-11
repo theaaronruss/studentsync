@@ -28,6 +28,12 @@ public class StudentController implements StudentsApi {
     }
 
     @Override
+    public ResponseEntity<StudentDTO> updateStudent(UUID id, AddStudentRequestDTO request) {
+        StudentDTO response = studentService.updateStudent(id, request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteStudent(UUID id) {
         studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
