@@ -47,8 +47,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StudentDTO'
-        '400':
-          description: Invalid input
+        '404':
+          description: Student not found
           content:
             application/json:
               schema:
@@ -80,8 +80,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StudentDTO'
-        '400':
-          description: Invalid input
+        '404':
+          description: Student not found
           content:
             application/json:
               schema:
@@ -103,8 +103,8 @@ paths:
       responses:
         '204':
           description: Student deleted
-        '400':
-          description: Invalid input
+        '404':
+          description: Student not found
           content:
             application/json:
               schema:
