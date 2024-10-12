@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class TeacherController implements TeachersApi {
 
@@ -21,6 +23,12 @@ public class TeacherController implements TeachersApi {
     public ResponseEntity<TeacherDTO> addTeacher(AddTeacherRequestDTO request) {
         TeacherDTO response = teacherService.addTeacher(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<TeacherDTO> getTeacher(UUID id) {
+        TeacherDTO response = teacherService.getTeacher(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

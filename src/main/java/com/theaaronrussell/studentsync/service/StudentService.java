@@ -34,6 +34,7 @@ public class StudentService {
                     log.error("Student with ID {} not found", id);
                     return new StudentNotFoundException(id);
                 });
+        log.info("Retrieved student with ID of {}", id);
         return studentMapper.studentToStudentDto(student);
     }
 

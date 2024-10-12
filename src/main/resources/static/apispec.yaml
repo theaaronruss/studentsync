@@ -129,6 +129,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TeacherDTO'
+  /teachers/{id}:
+    get:
+      tags:
+        - Teachers
+      summary: Retrieve a teacher
+      description: Get information about a teacher from the system
+      operationId: getTeacher
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The teacher's ID
+      responses:
+        '200':
+          description: Teacher found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherDTO'
+        '404':
+          description: Teacher not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
