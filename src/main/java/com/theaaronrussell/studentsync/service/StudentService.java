@@ -52,11 +52,11 @@ public class StudentService {
             log.error("Student with ID {} not found", id);
             throw new StudentNotFoundException(id);
         }
-        Student student = studentMapper.addStudentRequestDtoToStudent(request);
-        student.setId(id);
-        Student savedStudent = studentRepository.save(student);
-        log.info("Student with ID {} updated", savedStudent.getId());
-        return studentMapper.studentToStudentDto(savedStudent);
+        Student newStudent = studentMapper.addStudentRequestDtoToStudent(request);
+        newStudent.setId(id);
+        Student updatedStudent = studentRepository.save(newStudent);
+        log.info("Student with ID {} updated", updatedStudent.getId());
+        return studentMapper.studentToStudentDto(updatedStudent);
     }
 
     @Transactional

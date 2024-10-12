@@ -45,4 +45,17 @@ public class TeacherService {
         return teacherMapper.teacherToTeacherDto(savedTeacher);
     }
 
+    @Transactional
+    public TeacherDTO updateTeacher(UUID id, AddTeacherRequestDTO request) {
+        if (!teacherRepository.existsById(id)) {
+            log.error("Teacher with ID {} not found", id);
+            throw new TeacherNotFoundException(id);
+        }
+        Teacher newTeacher = teacherMapper.addTeacherRequestDtoToTeacher(request);
+        newTeacher.setId(id);
+        Teacher updatedTeacher = teacherRepository.save(newTeacher);
+        log.info("Teacher with ID {} updated", updatedTeacher.getId());
+        return teacherMapper.teacherToTeacherDto(updatedTeacher);
+    }
+
 }

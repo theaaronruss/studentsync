@@ -157,6 +157,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+    put:
+      tags:
+        - Teachers
+      summary: Update a teacher
+      description: Update a teacher in the system
+      operationId: updateTeacher
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The teacher's ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTeacherRequestDTO'
+      responses:
+        '200':
+          description: Teacher updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeacherDTO'
+        '404':
+          description: Teacher not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
@@ -240,7 +273,7 @@ components:
         message:
           type: string
           description: The error message
-          example: Student with ID of 461be284-e0e0-4873-8831-ca2500e31e39 not found
+          example: Invalid request
         timestamp:
           type: string
           format: date-time

@@ -31,4 +31,10 @@ public class TeacherController implements TeachersApi {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<TeacherDTO> updateTeacher(UUID id, AddTeacherRequestDTO request) {
+        TeacherDTO response = teacherService.updateTeacher(id, request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
