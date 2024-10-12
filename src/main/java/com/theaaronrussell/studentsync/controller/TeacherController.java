@@ -37,4 +37,10 @@ public class TeacherController implements TeachersApi {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Void> deleteTeacher(UUID id) {
+        teacherService.deleteTeacher(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

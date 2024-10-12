@@ -190,6 +190,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+    delete:
+      tags:
+        - Teachers
+      summary: Delete a teacher
+      description: Delete a teacher from the system
+      operationId: deleteTeacher
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The teacher's ID
+      responses:
+        '204':
+          description: Teacher deleted
+        '404':
+          description: Teacher not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:

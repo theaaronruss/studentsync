@@ -58,4 +58,13 @@ public class TeacherService {
         return teacherMapper.teacherToTeacherDto(updatedTeacher);
     }
 
+    @Transactional
+    public void deleteTeacher(UUID id) {
+        if (teacherRepository.deleteTeacherById(id) == 0) {
+            log.error("Teacher with ID {} not found", id);
+            throw new TeacherNotFoundException(id);
+        }
+        log.info("Teacher with ID {} deleted", id);
+    }
+
 }
