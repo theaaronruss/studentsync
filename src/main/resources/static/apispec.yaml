@@ -213,6 +213,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+  /academic-terms:
+    post:
+      tags:
+        - Academic Terms
+      summary: Add a new academic term
+      description: Add a new academic term to the system
+      operationId: addAcademicTerm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAcademicTermRequestDTO'
+      responses:
+        '201':
+          description: Academic term created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
 components:
   schemas:
     StudentDTO:
@@ -265,6 +285,28 @@ components:
           format: date
           description: The teacher's starting date of employment
           example: 2022-06-21
+    AcademicTermDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The academic term's ID
+          example: 5a13abde-33ca-45d2-8acd-beb2ec6c835f
+        name:
+          type: string
+          description: The academic term's name
+          example: Fall 2022
+        startDate:
+          type: string
+          format: date
+          description: The academic term's start date
+          example: 2024-09-01
+        endDate:
+          type: string
+          format: date
+          description: The academic term's end date
+          example: 2024-12-15
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student
@@ -306,6 +348,23 @@ components:
           format: date
           description: The teacher's starting date of employment
           example: 2022-06-21
+    AddAcademicTermRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The academic term's name
+          example: Fall 2022
+        startDate:
+          type: string
+          format: date
+          description: The academic term's start date
+          example: 2024-09-01
+        endDate:
+          type: string
+          format: date
+          description: The academic term's end date
+          example: 2024-12-15
     ErrorDTO:
       type: object
       properties:
