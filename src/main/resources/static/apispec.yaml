@@ -252,6 +252,14 @@ components:
           type: string
           description: The teacher's last name
           example: Smith
+        emailAddress:
+          type: string
+          description: The teacher's email address
+          example: martha.smith@school.edu
+        phoneNumber:
+          type: string
+          description: The teacher's phone number
+          example: 4575550123
         startDate:
           type: string
           format: date
@@ -285,6 +293,14 @@ components:
           type: string
           description: The teacher's last name
           example: Smith
+        emailAddress:
+          type: string
+          description: The teacher's email address
+          example: martha.smith@school.edu
+        phoneNumber:
+          type: string
+          description: The teacher's phone number
+          example: 4575550123
         startDate:
           type: string
           format: date

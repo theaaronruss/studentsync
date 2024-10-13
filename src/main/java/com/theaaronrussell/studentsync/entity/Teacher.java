@@ -23,6 +23,12 @@ public class Teacher {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email_address")
+    private String emailAddress;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "start_date")
     private Date startDate;
 
@@ -48,6 +54,22 @@ public class Teacher {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Date getStartDate() {

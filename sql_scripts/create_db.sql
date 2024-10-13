@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS teacher(
 	id VARCHAR(50) NOT NULL,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    email_address VARCHAR(50),
+    phone_number VARCHAR(50),
     start_date DATE,
     PRIMARY KEY (id)
 );
