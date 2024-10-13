@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -27,13 +28,6 @@ public class AcademicTermService {
         this.academicTermMapper = academicTermMapper;
     }
 
-    public AcademicTermDTO addAcademicTerm(AddAcademicTermRequestDTO request) {
-        AcademicTerm academicTerm = academicTermMapper.addAcademicTermRequestDtoToAcademicTerm(request);
-        AcademicTerm savedAcademicTerm = academicTermRepository.save(academicTerm);
-        log.info("Academic term with ID of {} added", savedAcademicTerm.getId());
-        return academicTermMapper.academicTermToAcademicTermDto(savedAcademicTerm);
-    }
-
     public AcademicTermDTO getAcademicTerm(UUID id) {
         AcademicTerm academicTerm = academicTermRepository.findById(id).orElseThrow(() -> {
             log.error("Academic term with ID of {} not found", id);
@@ -42,6 +36,15 @@ public class AcademicTermService {
         return academicTermMapper.academicTermToAcademicTermDto(academicTerm);
     }
 
+    @Transactional
+    public AcademicTermDTO addAcademicTerm(AddAcademicTermRequestDTO request) {
+        AcademicTerm academicTerm = academicTermMapper.addAcademicTermRequestDtoToAcademicTerm(request);
+        AcademicTerm savedAcademicTerm = academicTermRepository.save(academicTerm);
+        log.info("Academic term with ID of {} added", savedAcademicTerm.getId());
+        return academicTermMapper.academicTermToAcademicTermDto(savedAcademicTerm);
+    }
+
+    @Transactional
     public AcademicTermDTO updateAcademicTerm(UUID id, AddAcademicTermRequestDTO request) {
         if (!academicTermRepository.existsById(id)) {
             log.error("Academic term with ID of {} not found", id);
@@ -52,6 +55,15 @@ public class AcademicTermService {
         AcademicTerm updatedAcademicTerm = academicTermRepository.save(newAcademicTerm);
         log.info("Academic term with ID of {} updated", updatedAcademicTerm.getId());
         return academicTermMapper.academicTermToAcademicTermDto(updatedAcademicTerm);
+    }
+
+    @Transactional
+    public void deleteAcademicTerm(UUID id) {
+        if (academicTermRepository.deleteAcademicTermById(id) == 0) {
+            log.error("Academic term with ID of {} not found", id);
+            throw new AcademicTermNotFoundException(id);
+        }
+        log.info("Academic term with ID of {} deleted", id);
     }
 
 }

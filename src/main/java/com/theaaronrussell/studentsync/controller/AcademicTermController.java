@@ -39,4 +39,10 @@ public class AcademicTermController implements AcademicTermsApi {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Void> deleteAcademicTerm(UUID id) {
+        academicTermService.deleteAcademicTerm(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
