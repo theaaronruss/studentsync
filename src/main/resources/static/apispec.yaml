@@ -213,6 +213,110 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+  /academic-terms:
+    post:
+      tags:
+        - Academic Terms
+      summary: Add a new academic term
+      description: Add a new academic term to the system
+      operationId: addAcademicTerm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAcademicTermRequestDTO'
+      responses:
+        '201':
+          description: Academic term created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
+  /academic-terms/{id}:
+    get:
+      tags:
+        - Academic Terms
+      summary: Retrieve an academic term
+      description: Get information about an academic term from the system
+      operationId: getAcademicTerm
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The academic term's ID
+      responses:
+        '200':
+          description: Academic term found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
+        '404':
+          description: Academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+    put:
+      tags:
+        - Academic Terms
+      summary: Update an academic term
+      description: Update an academic term in the system
+      operationId: updateAcademicTerm
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The academic term's ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAcademicTermRequestDTO'
+      responses:
+        '200':
+          description: Academic term updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
+        '404':
+          description: Academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+    delete:
+      tags:
+        - Academic Terms
+      summary: Delete an academic term
+      description: Delete an academic term from the system
+      operationId: deleteAcademicTerm
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The academic term's ID
+      responses:
+        '204':
+          description: Academic term deleted
+        '404':
+          description: Academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
@@ -265,6 +369,28 @@ components:
           format: date
           description: The teacher's starting date of employment
           example: 2022-06-21
+    AcademicTermDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The academic term's ID
+          example: 5a13abde-33ca-45d2-8acd-beb2ec6c835f
+        name:
+          type: string
+          description: The academic term's name
+          example: Fall 2024
+        startDate:
+          type: string
+          format: date
+          description: The academic term's start date
+          example: 2024-09-01
+        endDate:
+          type: string
+          format: date
+          description: The academic term's end date
+          example: 2024-12-15
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student
@@ -306,6 +432,23 @@ components:
           format: date
           description: The teacher's starting date of employment
           example: 2022-06-21
+    AddAcademicTermRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The academic term's name
+          example: Fall 2024
+        startDate:
+          type: string
+          format: date
+          description: The academic term's start date
+          example: 2024-09-01
+        endDate:
+          type: string
+          format: date
+          description: The academic term's end date
+          example: 2024-12-15
     ErrorDTO:
       type: object
       properties:
