@@ -33,4 +33,10 @@ public class AcademicTermController implements AcademicTermsApi {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<AcademicTermDTO> updateAcademicTerm(UUID id, AddAcademicTermRequestDTO request) {
+        AcademicTermDTO response = academicTermService.updateAcademicTerm(id, request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

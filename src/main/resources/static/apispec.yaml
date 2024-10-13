@@ -261,6 +261,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+    put:
+      tags:
+        - Academic Terms
+      summary: Update an academic term
+      description: Update an academic term in the system
+      operationId: updateAcademicTerm
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The academic term's ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddAcademicTermRequestDTO'
+      responses:
+        '200':
+          description: Academic term updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
+        '404':
+          description: Academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
@@ -324,7 +357,7 @@ components:
         name:
           type: string
           description: The academic term's name
-          example: Fall 2022
+          example: Fall 2024
         startDate:
           type: string
           format: date
@@ -382,7 +415,7 @@ components:
         name:
           type: string
           description: The academic term's name
-          example: Fall 2022
+          example: Fall 2024
         startDate:
           type: string
           format: date

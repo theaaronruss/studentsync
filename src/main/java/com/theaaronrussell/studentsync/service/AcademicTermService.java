@@ -42,4 +42,16 @@ public class AcademicTermService {
         return academicTermMapper.academicTermToAcademicTermDto(academicTerm);
     }
 
+    public AcademicTermDTO updateAcademicTerm(UUID id, AddAcademicTermRequestDTO request) {
+        if (!academicTermRepository.existsById(id)) {
+            log.error("Academic term with ID of {} not found", id);
+            throw new AcademicTermNotFoundException(id);
+        }
+        AcademicTerm newAcademicTerm = academicTermMapper.addAcademicTermRequestDtoToAcademicTerm(request);
+        newAcademicTerm.setId(id);
+        AcademicTerm updatedAcademicTerm = academicTermRepository.save(newAcademicTerm);
+        log.info("Academic term with ID of {} updated", updatedAcademicTerm.getId());
+        return academicTermMapper.academicTermToAcademicTermDto(updatedAcademicTerm);
+    }
+
 }
