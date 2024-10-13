@@ -1,6 +1,7 @@
 package com.theaaronrussell.studentsync.service;
 
 import com.theaaronrussell.studentsync.entity.AcademicTerm;
+import com.theaaronrussell.studentsync.exception.AcademicTermNotFoundException;
 import com.theaaronrussell.studentsync.mapper.AcademicTermMapper;
 import com.theaaronrussell.studentsync.model.AcademicTermDTO;
 import com.theaaronrussell.studentsync.model.AddAcademicTermRequestDTO;
@@ -9,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AcademicTermService {
@@ -29,6 +32,14 @@ public class AcademicTermService {
         AcademicTerm savedAcademicTerm = academicTermRepository.save(academicTerm);
         log.info("Academic term with ID of {} added", savedAcademicTerm.getId());
         return academicTermMapper.academicTermToAcademicTermDto(savedAcademicTerm);
+    }
+
+    public AcademicTermDTO getAcademicTerm(UUID id) {
+        AcademicTerm academicTerm = academicTermRepository.findById(id).orElseThrow(() -> {
+            log.error("Academic term with ID of {} not found", id);
+            return new AcademicTermNotFoundException(id);
+        });
+        return academicTermMapper.academicTermToAcademicTermDto(academicTerm);
     }
 
 }

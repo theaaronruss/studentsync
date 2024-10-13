@@ -233,6 +233,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AcademicTermDTO'
+  /academic-terms/{id}:
+    get:
+      tags:
+        - Academic Terms
+      summary: Retrieve an academic term
+      description: Get information about an academic term from the system
+      operationId: getAcademicTerm
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The academic term's ID
+      responses:
+        '200':
+          description: Academic term found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicTermDTO'
+        '404':
+          description: Academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:

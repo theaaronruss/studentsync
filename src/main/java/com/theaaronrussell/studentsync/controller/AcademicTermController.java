@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class AcademicTermController implements AcademicTermsApi {
 
@@ -23,6 +25,12 @@ public class AcademicTermController implements AcademicTermsApi {
     public ResponseEntity<AcademicTermDTO> addAcademicTerm(AddAcademicTermRequestDTO request) {
         AcademicTermDTO response = academicTermService.addAcademicTerm(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<AcademicTermDTO> getAcademicTerm(UUID id) {
+        AcademicTermDTO response = academicTermService.getAcademicTerm(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
