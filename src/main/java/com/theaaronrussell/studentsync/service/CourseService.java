@@ -4,6 +4,7 @@ import com.theaaronrussell.studentsync.entity.AcademicTerm;
 import com.theaaronrussell.studentsync.entity.Course;
 import com.theaaronrussell.studentsync.entity.Teacher;
 import com.theaaronrussell.studentsync.exception.AcademicTermNotFoundException;
+import com.theaaronrussell.studentsync.exception.CourseNotFoundException;
 import com.theaaronrussell.studentsync.exception.TeacherNotFoundException;
 import com.theaaronrussell.studentsync.mapper.CourseMapper;
 import com.theaaronrussell.studentsync.model.AddCourseRequestDTO;
@@ -35,6 +36,15 @@ public class CourseService {
         this.teacherRepository = teacherRepository;
         this.academicTermRepository = academicTermRepository;
         this.courseMapper = courseMapper;
+    }
+
+    public CourseDTO getCourse(UUID id) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> {
+            log.error("Course with ID of {} not found", id);
+            return new CourseNotFoundException(id);
+        });
+        log.info("Retrieved course with ID of {}", id);
+        return courseMapper.courseToCourseDto(course);
     }
 
     @Transactional

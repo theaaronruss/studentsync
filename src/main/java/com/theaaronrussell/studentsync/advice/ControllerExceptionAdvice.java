@@ -1,6 +1,7 @@
 package com.theaaronrussell.studentsync.advice;
 
 import com.theaaronrussell.studentsync.exception.AcademicTermNotFoundException;
+import com.theaaronrussell.studentsync.exception.CourseNotFoundException;
 import com.theaaronrussell.studentsync.exception.StudentNotFoundException;
 import com.theaaronrussell.studentsync.exception.TeacherNotFoundException;
 import com.theaaronrussell.studentsync.model.ErrorDTO;
@@ -17,7 +18,8 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler({
             StudentNotFoundException.class,
             TeacherNotFoundException.class,
-            AcademicTermNotFoundException.class
+            AcademicTermNotFoundException.class,
+            CourseNotFoundException.class
     })
     public ResponseEntity<ErrorDTO> handleNotFoundExceptions(RuntimeException e) {
         ErrorDTO response = new ErrorDTO();

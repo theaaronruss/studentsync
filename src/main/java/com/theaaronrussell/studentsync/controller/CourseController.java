@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class CourseController implements CoursesApi {
 
@@ -23,6 +25,12 @@ public class CourseController implements CoursesApi {
     public ResponseEntity<CourseDTO> addCourse(AddCourseRequestDTO request) {
         CourseDTO course = courseService.addCourse(request);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<CourseDTO> getCourse(UUID id) {
+        CourseDTO course = courseService.getCourse(id);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
 }
