@@ -317,6 +317,116 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDTO'
+  /courses:
+    post:
+      tags:
+        - Courses
+      summary: Add a new course
+      description: Add a new course to the system
+      operationId: addCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCourseRequestDTO'
+      responses:
+        '201':
+          description: Course created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDTO'
+        '404':
+          description: Teacher or academic term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+  /courses/{id}:
+    get:
+      tags:
+        - Courses
+      summary: Retrieve a course
+      description: Get information about a course from the system
+      operationId: getCourse
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The course's ID
+      responses:
+        '200':
+          description: Course found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDTO'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+    put:
+      tags:
+        - Courses
+      summary: Update a course
+      description: Update a course in the system
+      operationId: updateCourse
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The course's ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCourseRequestDTO'
+      responses:
+        '200':
+          description: Course updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseDTO'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+    delete:
+      tags:
+        - Courses
+      summary: Delete a course
+      description: Delete a course from the system
+      operationId: deleteCourse
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The course's ID
+      responses:
+        '204':
+          description: Course deleted
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
 components:
   schemas:
     StudentDTO:
@@ -391,6 +501,32 @@ components:
           format: date
           description: The academic term's end date
           example: 2024-12-15
+    CourseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The course's ID
+          example: 5a13abde-33ca-45d2-8acd-beb2ec6c835f
+        name:
+          type: string
+          description: The course's name
+          example: MATH101
+        teacher:
+          $ref: '#/components/schemas/TeacherDTO'
+        academicTerm:
+          $ref: '#/components/schemas/AcademicTermDTO'
+        startTime:
+          type: string
+          format: time
+          description: The course's start time
+          example: 08:00:00
+        endTime:
+          type: string
+          format: time
+          description: The course's end time
+          example: 09:30:00
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student
@@ -449,6 +585,33 @@ components:
           format: date
           description: The academic term's end date
           example: 2024-12-15
+    AddCourseRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The course's name
+          example: MATH101
+        teacherId:
+          type: string
+          format: uuid
+          description: The ID of the teacher who teaches the course
+          example: 245285c9-fa47-451d-8642-014985a32fad
+        academicTermId:
+          type: string
+          format: uuid
+          description: The ID of the academic term in which the course is taught
+          example: 5a13abde-33ca-45d2-8acd-beb2ec6c835f
+        startTime:
+          type: string
+          format: time
+          description: The course's start time
+          example: 08:00:00
+        endTime:
+          type: string
+          format: time
+          description: The course's end time
+          example: 09:30:00
     ErrorDTO:
       type: object
       properties:
