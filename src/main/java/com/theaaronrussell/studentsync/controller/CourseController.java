@@ -1,6 +1,7 @@
 package com.theaaronrussell.studentsync.controller;
 
 import com.theaaronrussell.studentsync.api.CoursesApi;
+import com.theaaronrussell.studentsync.entity.Course;
 import com.theaaronrussell.studentsync.model.AddCourseRequestDTO;
 import com.theaaronrussell.studentsync.model.CourseDTO;
 import com.theaaronrussell.studentsync.service.CourseService;
@@ -30,6 +31,12 @@ public class CourseController implements CoursesApi {
     @Override
     public ResponseEntity<CourseDTO> getCourse(UUID id) {
         CourseDTO course = courseService.getCourse(id);
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<CourseDTO> updateCourse(UUID id, AddCourseRequestDTO request) {
+        CourseDTO course = courseService.updateCourse(id, request);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 

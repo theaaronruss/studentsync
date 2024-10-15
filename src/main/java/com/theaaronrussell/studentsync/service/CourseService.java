@@ -67,4 +67,33 @@ public class CourseService {
         return courseMapper.courseToCourseDto(savedCourse);
     }
 
+    @Transactional
+    public CourseDTO updateCourse(UUID id, AddCourseRequestDTO request) {
+        if (!courseRepository.existsById(id)) {
+            log.error("Course with ID of {} not found", id);
+            throw new CourseNotFoundException(id);
+        }
+        checkIfTeacherExists(request.getTeacherId());
+        checkIfAcademicTermExists(request.getAcademicTermId());
+        Course newCourse = courseMapper.addCourseRequestDtoToCourse(request);
+        newCourse.setId(id);
+        Course updatedCourse = courseRepository.save(newCourse);
+        log.info("Course with ID of {} updated", id);
+        return courseMapper.courseToCourseDto(updatedCourse);
+    }
+
+    private void checkIfTeacherExists(UUID teacherId) {
+        if (!teacherRepository.existsById(teacherId)) {
+            log.error("Teacher with ID of {} not found", teacherId);
+            throw new TeacherNotFoundException(teacherId);
+        }
+    }
+
+    private void checkIfAcademicTermExists(UUID academicTermId) {
+        if (!academicTermRepository.existsById(academicTermId)) {
+            log.error("Academic term with ID of {} not found", academicTermId);
+            throw new AcademicTermNotFoundException(academicTermId);
+        }
+    }
+
 }
