@@ -40,4 +40,10 @@ public class CourseController implements CoursesApi {
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Void> deleteCourse(UUID id) {
+        courseService.deleteCourse(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

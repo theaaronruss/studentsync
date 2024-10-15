@@ -96,4 +96,13 @@ public class CourseService {
         }
     }
 
+    @Transactional
+    public void deleteCourse(UUID id) {
+        if (courseRepository.deleteCourseById(id) == 0) {
+            log.error("Course with ID of {} not found", id);
+            throw new CourseNotFoundException(id);
+        }
+        log.info("Course with ID of {} deleted", id);
+    }
+
 }
