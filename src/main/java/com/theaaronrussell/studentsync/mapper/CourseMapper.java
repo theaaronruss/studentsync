@@ -14,6 +14,7 @@ public interface CourseMapper {
     @Mapping(target = "teacher.id", source = "teacherId")
     Course addCourseRequestDtoToCourse(AddCourseRequestDTO request);
 
+    @Mapping(target = "status", ignore = true)
     CourseDTO courseToCourseDto(Course course);
 
 }
