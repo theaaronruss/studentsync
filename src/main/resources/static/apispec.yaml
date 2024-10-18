@@ -527,6 +527,17 @@ components:
           format: time
           description: The course's end time
           example: 09:30:00
+        status:
+          type: string
+          enum:
+            - CURRENT
+            - ARCHIVE
+            - UPCOMING
+          description: |- 
+            The course's status
+            - CURRENT: The course is currently in progress (current academic term)
+            - ARCHIVE: The course has already ended (past academic term)
+            - UPCOMING: The course has not yet started (upcoming academic term)
     AddStudentRequestDTO:
       type: object
       description: A request to add a new student

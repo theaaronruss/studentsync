@@ -7,6 +7,7 @@ import com.theaaronrussell.studentsync.exception.AcademicTermNotFoundException;
 import com.theaaronrussell.studentsync.exception.CourseNotFoundException;
 import com.theaaronrussell.studentsync.exception.TeacherNotFoundException;
 import com.theaaronrussell.studentsync.mapper.CourseMapper;
+import com.theaaronrussell.studentsync.model.AcademicTermDTO;
 import com.theaaronrussell.studentsync.model.AddCourseRequestDTO;
 import com.theaaronrussell.studentsync.model.CourseDTO;
 import com.theaaronrussell.studentsync.repository.AcademicTermRepository;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -44,7 +46,9 @@ public class CourseService {
             return new CourseNotFoundException(id);
         });
         log.info("Retrieved course with ID of {}", id);
-        return courseMapper.courseToCourseDto(course);
+        CourseDTO result = courseMapper.courseToCourseDto(course);
+        setCourseStatus(result);
+        return result;
     }
 
     @Transactional
@@ -64,7 +68,9 @@ public class CourseService {
         savedCourse.setTeacher(teacher);
         savedCourse.setAcademicTerm(academicTerm);
         log.info("Course with ID of {} added", savedCourse.getId());
-        return courseMapper.courseToCourseDto(savedCourse);
+        CourseDTO result = courseMapper.courseToCourseDto(savedCourse);
+        setCourseStatus(result);
+        return result;
     }
 
     @Transactional
@@ -79,7 +85,9 @@ public class CourseService {
         newCourse.setId(id);
         Course updatedCourse = courseRepository.save(newCourse);
         log.info("Course with ID of {} updated", id);
-        return courseMapper.courseToCourseDto(updatedCourse);
+        CourseDTO result = courseMapper.courseToCourseDto(updatedCourse);
+        setCourseStatus(result);
+        return result;
     }
 
     private void checkIfTeacherExists(UUID teacherId) {
@@ -103,6 +111,19 @@ public class CourseService {
             throw new CourseNotFoundException(id);
         }
         log.info("Course with ID of {} deleted", id);
+    }
+
+    private void setCourseStatus(CourseDTO course) {
+        AcademicTermDTO courseTerm = course.getAcademicTerm();
+        if (courseTerm == null) return;
+        LocalDate now = LocalDate.now();
+        if (courseTerm.getStartDate().isAfter(now)) {
+            course.setStatus(CourseDTO.StatusEnum.UPCOMING);
+        } else if (courseTerm.getEndDate().isBefore(now)) {
+            course.setStatus(CourseDTO.StatusEnum.ARCHIVE);
+        } else {
+            course.setStatus(CourseDTO.StatusEnum.CURRENT);
+        }
     }
 
 }
