@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS teacher;
 DROP TABLE IF EXISTS academic_term;
+DROP TABLE IF EXISTS course_enrollment;
 CREATE TABLE IF NOT EXISTS user(
 	username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
@@ -43,4 +44,11 @@ CREATE TABLE IF NOT EXISTS course(
     PRIMARY KEY (id),
     FOREIGN KEY (teacher_id) REFERENCES teacher(id),
     FOREIGN KEY (academic_term_id) REFERENCES academic_term(id)
+);
+CREATE TABLE IF NOT EXISTS course_enrollment(
+	student_id VARCHAR(50) NOT NULL,
+    course_id VARCHAR(50) NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES student(id),
+    FOREIGN KEY (course_id) REFERENCES course(id)
 );
